@@ -18,15 +18,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Visi 1</td>
-                    <td>Menjadi desa yang mandiri dan sejahtera</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editVisionModal">Edit</button>
-                        <a href="delete_vision_mission.php?id=1" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?');">Hapus</a>
-                    </td>
-                </tr>
+                @foreach ($visi as $v)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $v->title }}</td>
+                        <td>{{ $v->description }}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editVisionModal">Edit</button>
+                            <a href="delete_vision_mission.php?id=1" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?');">Hapus</a>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -67,14 +69,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="add_vision.php" method="POST">
+                    <form action="{{ route('savevisi') }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label for="visionTitle" class="form-label">Deskripsi</label>
                             <input type="text" class="form-control" id="visionTitle" name="title" required>
                         </div>
                         <div class="mb-3">
                             <label for="visionDescription" class="form-label">Keterangan</label>
-                            <textarea class="form-control" id="visionDescription" name="content" rows="3" required></textarea>
+                            <textarea class="form-control" id="visionDescription" name="description" rows="3" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
