@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VisiController;
+use App\Models\Profile;
+
+use function PHPSTORM_META\type;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +31,9 @@ Route::middleware('guest')->group(function () {
     })->name('guest.profile.sejarah');
 
     Route::get('/profile/visi-misi', function () {
-        return view('guest.pages.profile.visi-misi.index');
+        return view('guest.pages.profile.visi-misi.index', [
+            'visi' => Profile::where('type', 'visi')->get()
+        ]);
     })->name('guest.profile.visi-misi');
 
     Route::get('/profile/fasilitas', function () {
@@ -64,7 +70,9 @@ Route::get('admin/beranda', function () {
 })->name('admin.dashboard.beranda');
 
 Route::get('admin/profile-desa', function () {
-    return view('admin.pages.profile-desa.index');
+    return view('admin.pages.profile-desa.index', [
+        'visi' => Profile::where('type', 'visi')->get()
+    ]);
 })->name('admin.dashboard.profile-desa');
 
 
@@ -79,3 +87,5 @@ Route::get('admin/data-desa', function () {
 Route::get('admin/publikasi', function () {
     return view('admin.pages.publikasi.index');
 })->name('admin.dashboard.publikasi');
+
+Route::post('admin/addvisi', [VisiController::class, "store"])->name("savevisi");
