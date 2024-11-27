@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 mb-4">
                 <div class="card">
-                    <img src="{{ asset('img/static-img/struktur-organisasi.png') }}" class="card-img-top"
+                    <img src="{{ asset('storage/'. $image->first()->image_url) }}" class="card-img-top"
                         alt="Struktur Organisasi">
                 </div>
             </div>

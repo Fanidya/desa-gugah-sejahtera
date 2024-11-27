@@ -9,7 +9,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="logout.php">Logout</a>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button type="submit">Logout</button>
+                    </form>
+
+                    
                 </li>
             </ul>
         </div>

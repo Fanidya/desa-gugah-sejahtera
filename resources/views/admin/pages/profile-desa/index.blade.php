@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+    @extends('admin.layouts.main')
 @section('container')
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard | Profil Desa</h1>
@@ -23,9 +23,13 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $v->title }}</td>
                         <td>{{ $v->description }}</td>
-                        <td>
+                        <td class="column-gap-2 d-flex">
                             <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editVisionModal">Edit</button>
-                            <a href="delete_vision_mission.php?id=1" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?');">Hapus</a>
+                            <form action="{{ route("hapus visi", ['id' => $v->id]) }}" method="POST">
+                                @csrf
+                                @method("DELETE")
+                                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus?');" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -47,15 +51,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Misi 1</td>
-                    <td>Meningkatkan kualitas hidup masyarakat desa.</td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editMissionModal">Edit</button>
-                        <a href="delete_vision_mission.php?id=2" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?');">Hapus</a>
-                    </td>
-                </tr>
+                @foreach ($misi as $m)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $m->title }}</td>
+                        <td>{{ $m->description }}</td>
+                        <td class="column-gap-2 d-flex">
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editMissionModal">Edit</button>
+                            <form action="{{ route("hapus misi", ['id' => $m->id]) }}" method="POST">
+                                @csrf
+                                @method("DELETE")
+                                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus?');" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -95,14 +105,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="add_mission.php" method="POST">
+                    <form action="{{ route('savemisi') }}" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label for="missionTitle" class="form-label">Deskripsi</label>
                             <input type="text" class="form-control" id="missionTitle" name="title" required>
                         </div>
                         <div class="mb-3">
                             <label for="missionDescription" class="form-label">Keterangan</label>
-                            <textarea class="form-control" id="missionDescription" name="content" rows="3" required></textarea>
+                            <textarea class="form-control" id="missionDescription" name="description" rows="3" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>
@@ -120,14 +131,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="edit_vision_mission.php?id=1" method="POST">
+                    <form action="{{ route("update visi") }}" method="POST">
+                        @csrf
+                        @method("PUT")
+                        <select name="id">
+                            @foreach ($visi as $v)
+                            <option value="{{ $v->id }}">{{ $v->title }}</option>
+                            @endforeach
+                        </select>
                         <div class="mb-3">
                             <label for="editVisionDescription" class="form-label">Deskripsi</label>
-                            <input type="text" class="form-control" id="editVisionDescription" name="title" value="Visi 1" required>
+                            <input type="text" class="form-control" id="editVisionDescription" name="title" required>
                         </div>
                         <div class="mb-3">
                             <label for="editVisionRemarks" class="form-label">Keterangan</label>
-                            <textarea class="form-control" id="editVisionRemarks" name="content" rows="3" required>Menjadi desa yang mandiri dan sejahtera.</textarea>
+                            <textarea class="form-control" id="editVisionRemarks" name="description" rows="3" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
@@ -145,14 +163,21 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="edit_vision_mission.php?id=2" method="POST">
+                    <form action="{{ route("update misi") }}" method="POST">
+                        @csrf
+                        @method("PUT")
+                        <select name="id">
+                            @foreach ($misi as $m)
+                            <option value="{{ $m->id }}">{{ $m->title }}</option>
+                            @endforeach
+                        </select>
                         <div class="mb-3">
                             <label for="editMissionDescription" class="form-label">Deskripsi</label>
-                            <input type="text" class="form-control" id="editMissionDescription" name="title" value="Misi 1" required>
+                            <input type="text" class="form-control" id="editMissionDescription" name="title" required>
                         </div>
                         <div class="mb-3">
                             <label for="editMissionRemarks" class="form-label">Keterangan</label>
-                            <textarea class="form-control" id="editMissionRemarks" name="content" rows="3" required>Meningkatkan kualitas hidup masyarakat desa.</textarea>
+                            <textarea class="form-control" id="editMissionRemarks" name="content" rows="3" required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
@@ -160,4 +185,95 @@
             </div>
         </div>
     </div>
+
+    <!-- Fasilitas Section -->
+    <h2>Fasilitas</h2>
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#tambahfasilitas">Tambah Fasilitas</button>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Deskripsi</th>
+                    <th>Keterangan</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample Data (Replace this with dynamic data from the database) -->
+                @foreach ($fasilitas as $f)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $f->title }}</td>
+                        <td>{{ $f->description }}</td>
+                        <td class="column-gap-2 d-flex">
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editFacilityModal">Edit</button>
+                            <form action="{{ route("hapus fasilitas", ['id' => $f->id]) }}" method="POST">
+                                @csrf
+                                @method("DELETE")
+                                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus?');" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                <!-- Add more entries as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal for Adding Fasilitas -->
+    <div class="modal fade" id="tambahfasilitas" tabindex="-1" aria-labelledby="editFacilityModal1Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editFacilityModal1Label">Fasilitas Baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route("savefasilitas") }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="editFacilityName" class="form-label">Nama Fasilitas</label>
+                            <input type="text" class="form-control" id="editFacilityName" name="title" placeholder="puskesmas angker" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editFacilityPhoto" class="form-label">Pilih Foto</label>
+                            <input type="file" class="form-control" id="editFacilityPhoto" name="photo">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- @if ($fasilitas->isEmpty())
+    
+    @else
+    <div class="modal fade" id="editFacilityModal1" tabindex="-1" aria-labelledby="editFacilityModal1Label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editFacilityModal1Label">Edit Fasilitas</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/editfasilitas" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="editFacilityName" class="form-label">Deskripsi</label>
+                            <input type="text" class="form-control" id="editFacilityName" name="name" value="Foto fasilitas" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editFacilityPhoto" class="form-label">Pilih Foto</label>
+                            <input type="file" class="form-control" id="editFacilityPhoto" name="photo" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif --}}
+
 @endsection

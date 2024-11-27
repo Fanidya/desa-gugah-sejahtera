@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Profile;
+use App\Models\DataDesa;
 
-class MisiController extends Controller
+class DataDesaController extends Controller
 {
     public function store(Request $request)
     {
@@ -14,9 +14,9 @@ class MisiController extends Controller
             'description' => 'required'
         ]);
 
-        Profile::create([
+        DataDesa::create([
             ...$data,
-            'type' => 'misi'
+            'type' => 'datadesa'
         ]);
 
         return back();
@@ -24,14 +24,14 @@ class MisiController extends Controller
 
     public function update(Request $request)
     {
-        $misi = Profile::query()->findOrFail($request->id);
+        $datadesa = DataDesa::query()->findOrFail($request->id);
 
-        $misi->update($request->except("id"));
+        $datadesa->update($request->except("id"));
 
         return back();
     }
 
-    public function destroy(Profile $id)
+    public function destroy(DataDesa $id)
     {
         $id->delete();
 

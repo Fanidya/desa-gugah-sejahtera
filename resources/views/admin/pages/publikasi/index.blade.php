@@ -20,15 +20,21 @@
                 </thead>
                 <tbody>
                     <!-- Sample Data (Replace with dynamic data from the database) -->
+                    @foreach ($pengumuman as $p)
                     <tr>
-                        <td>1</td>
-                        <td>Pengumuman 1</td>
-                        <td>Isi pengumuman pertama.</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editAnnouncementModal1">Edit</button>
-                            <a href="delete_announcement.php?id=1" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus?');">Hapus</a>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $p->title }}</td>
+                        <td>{{ $p->description }}</td>
+                        <td class="d-flex">
+                            <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editPengumumanModal">Edit</button>
+                            <form action="{{ route("hapus pengumuman", ['id' => $p->id]) }}" method="POST">
+                                @csrf
+                                @method("DELETE")
+                                <button type="submit" onclick="return confirm('Apakah Anda yakin ingin menghapus?');" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
                         </td>
                     </tr>
+                @endforeach
                     <!-- More announcements -->
                 </tbody>
             </table>
@@ -75,17 +81,18 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="add_announcement.php" method="POST">
-                            <div class="mb-3">
-                                <label for="announcementTitle" class="form-label">Deskripsi</label>
-                                <input type="text" class="form-control" id="announcementTitle" name="title" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="announcementContent" class="form-label">Keterangan</label>
-                                <textarea class="form-control" id="announcementContent" name="content" rows="3" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </form>
+                        <form action="{{ route('savepengumuman') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="PengumumanTitle" class="form-label">Deskripsi</label>
+                            <input type="text" class="form-control" id="PengumumanTitle" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="PengumumanDescription" class="form-label">Keterangan</label>
+                            <textarea class="form-control" id="PengumumanDescription" name="description" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -100,17 +107,24 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="edit_announcement.php?id=1" method="POST">
-                            <div class="mb-3">
-                                <label for="editAnnouncementTitle" class="form-label">Judul</label>
-                                <input type="text" class="form-control" id="editAnnouncementTitle" name="title" value="Pengumuman 1" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="editAnnouncementContent" class="form-label">Isi</label>
-                                <textarea class="form-control" id="editAnnouncementContent" name="content" rows="3" required>Isi pengumuman pertama.</textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </form>
+                        <form action="{{ route("update pengumuman") }}" method="POST">
+                        @csrf
+                        @method("PUT")
+                        <select name="id">
+                            @foreach ($pengumuman as $p)
+                            <option value="{{ $p->id }}">{{ $p->title }}</option>
+                            @endforeach
+                        </select>
+                        <div class="mb-3">
+                            <label for="editPengumumanDescription" class="form-label">Deskripsi</label>
+                            <input type="text" class="form-control" id="editPengumumanDescription" name="title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPengumumanRemarks" class="form-label">Keterangan</label>
+                            <textarea class="form-control" id="editPengumumanRemarks" name="description" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
                     </div>
                 </div>
             </div>

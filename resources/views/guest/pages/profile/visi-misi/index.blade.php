@@ -8,16 +8,12 @@
                 @foreach ($visi as $v)
                 <p>{{ $v->title }} : {{ $v->description }}</p>
                 @endforeach
-                
             </div>
             <div class="col-md-6">
                 <h3 class="text"> <br> Misi</h3>
-                <p>
-                    Dolor sit amet consectetur, adipisicing elit. Ipsam, beatae maxime.
-                    Vel animi eveniet doloremque reiciendis soluta iste provident non
-                    rerum illum perferendis earum est architecto dolores vitae quia vero
-                    quod incidunt culpa corporis, porro doloribus. Voluptates nemo doloremque cum.
-                </p>
+                @foreach ($misi as $m)
+                <p>{{ $m->title }} : {{ $m->description }}</p>
+                @endforeach
             </div>
         </div>
     </div>

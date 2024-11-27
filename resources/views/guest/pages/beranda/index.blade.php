@@ -49,8 +49,7 @@
             <!-- Kolom yang lebih besar untuk Google Maps -->
             <div class="col-md-8">
                 <div class="text-center">
-                    <iframe src="https://www.google.com/maps/place/Kantor+Desa+Gugah+Sejahtera/@1.1739275,108.9797407,15z/data=!4m6!3m5!1s0x31e482dcb850fccd:0x1a8004554ae57e14!8m2!3d1.1739275!4d108.9797407!16s%2Fg%2F11c5_vrll7?hl=id&entry=ttu&g_ep=EgoyMDI0MTExMy4xIKXMDSoASAFQAw%3D%3D" 
-                    width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15955.923586790477!2d108.9797407!3d1.1739275!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31e482dcb850fccd%3A0x1a8004554ae57e14!2sKantor%20Desa%20Gugah%20Sejahtera!5e0!3m2!1sid!2sid!4v1732441298850!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
 

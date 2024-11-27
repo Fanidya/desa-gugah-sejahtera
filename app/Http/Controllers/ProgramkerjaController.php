@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pemerintahan;
 use Illuminate\Http\Request;
-use App\Models\Profile;
 
-class MisiController extends Controller
+class ProgramkerjaController extends Controller
 {
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|unique:profiles,title',
+            'name' => 'required|unique:pemerintahans,name',
             'description' => 'required'
         ]);
 
-        Profile::create([
+        Pemerintahan::create([
             ...$data,
-            'type' => 'misi'
+            'type' => 'program'
         ]);
 
         return back();
@@ -24,14 +24,14 @@ class MisiController extends Controller
 
     public function update(Request $request)
     {
-        $misi = Profile::query()->findOrFail($request->id);
+        $programkerja = Pemerintahan::query()->findOrFail($request->id);
 
-        $misi->update($request->except("id"));
+        $programkerja->update($request->except("id"));
 
         return back();
     }
 
-    public function destroy(Profile $id)
+    public function destroy(Pemerintahan $id)
     {
         $id->delete();
 

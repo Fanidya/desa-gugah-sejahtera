@@ -21,4 +21,20 @@ class VisiController extends Controller
 
         return back();
     }
+
+    public function update(Request $request)
+    {
+        $visi = Profile::query()->findOrFail($request->id);
+
+        $visi->update($request->except("id"));
+
+        return back();
+    }
+
+    public function destroy(Profile $id)
+    {
+        $id->delete();
+
+        return back();
+    }
 }

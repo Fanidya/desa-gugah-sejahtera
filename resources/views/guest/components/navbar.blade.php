@@ -22,11 +22,11 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item {{ request()->routeIs('guest.profile.sejarah') ? 'active' : '' }}"
-                                href="{{ route('guest.profile.sejarah') }}">Sejarah</a></li>
+                                href="{{ route('guest.profile.sejarah') }}">Sejarah Desa</a></li>
                         <li><a class="dropdown-item {{ request()->routeIs('guest.profile.visi-misi') ? 'active' : '' }}"
                                 href="{{ route('guest.profile.visi-misi') }}">Visi & Misi</a></li>
                         <li><a class="dropdown-item {{ request()->routeIs('guest.profile.fasilitas') ? 'active' : '' }}"
-                                href="{{ route('guest.profile.fasilitas') }}">Fasilitas</a></li>
+                                href="{{ route('guest.profile.fasilitas') }}">Fasilitas Desa</a></li>
                     </ul>
                 </li>
 
@@ -37,7 +37,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item {{ request()->routeIs('guest.pemerintahan-desa.struktur') ? 'active' : '' }}"
-                                href="{{ route('guest.pemerintahan-desa.struktur') }}">Struktur</a></li>
+                                href="{{ route('guest.pemerintahan-desa.struktur') }}">Struktur Organisasi</a></li>
                         <li><a class="dropdown-item {{ request()->routeIs('guest.pemerintahan-desa.program-kerja') ? 'active' : '' }}"
                                 href="{{ route('guest.pemerintahan-desa.program-kerja') }}">Program Kerja</a></li>
                     </ul>

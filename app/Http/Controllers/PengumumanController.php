@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pengumuman;
 use Illuminate\Http\Request;
-use App\Models\Profile;
 
-class MisiController extends Controller
+class PengumumanController extends Controller
 {
     public function store(Request $request)
     {
         $data = $request->validate([
-            'title' => 'required|unique:profiles,title',
+            'title' => 'required|unique:pengumuman,title',
             'description' => 'required'
         ]);
 
-        Profile::create([
+        Pengumuman::create([
             ...$data,
-            'type' => 'misi'
+            'type' => 'pengumuman'
         ]);
 
         return back();
@@ -24,14 +24,14 @@ class MisiController extends Controller
 
     public function update(Request $request)
     {
-        $misi = Profile::query()->findOrFail($request->id);
+        $pengumuman = Pengumuman::query()->findOrFail($request->id);
 
-        $misi->update($request->except("id"));
+        $pengumuman->update($request->except("id"));
 
         return back();
     }
 
-    public function destroy(Profile $id)
+    public function destroy(Pengumuman $id)
     {
         $id->delete();
 
